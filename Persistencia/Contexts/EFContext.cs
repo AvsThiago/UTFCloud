@@ -1,4 +1,5 @@
-﻿using Persistencia.Migrations;
+﻿using Modelo;
+using Persistencia.Migrations;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -14,6 +15,7 @@ namespace Persistencia.Contexts
         public EFContext() : base("UTFCloud")
         {
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<EFContext, Configuration>());
+            
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -22,6 +24,6 @@ namespace Persistencia.Contexts
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
         }
 
-
+        public DbSet<Arquivos> arquivos { get; set; } 
     }
 }

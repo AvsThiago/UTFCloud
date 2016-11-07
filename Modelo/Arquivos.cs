@@ -14,5 +14,8 @@ namespace Modelo
         public string Senha { get; set; }
         public DateTime DtSerRemovido { get; set; }
         public byte[] Arquivo { get; set; }
+        public string ArquivoMimeType { get; set; }
+        public string NomeArquivo { get; set; }
+        public long TamanhoArquivo { get; set; }
     }
 }
