@@ -1,5 +1,6 @@
 ﻿using Modelo;
 using Persistencia.Contexts;
+using Persistencia.DAL;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -11,37 +12,26 @@ namespace Servico
 {
     public class ArquivoServico
     {
-        private EFContext context = new EFContext();
+        private ArquivoDAL arquivosDAL = new ArquivoDAL();
 
         public IQueryable ObterArquivosPorRA(long ra)
         {
-            return context.arquivos.Where(p => p.RA == ra).OrderBy(n => n.);
+            return arquivosDAL.ObterArquivosPorRA(ra);
         }
 
         public Arquivos ObterArquivoId(long id)
         {
-            return context.arquivos.Where(p => p.ArquivosID == id).FirstOrDefault();
+            return arquivosDAL.ObterArquivoId(id);
         }
 
-        public void GravarArquivo(Arquivos arquivo)
+        public void GravarArquivo(Arquivos arquivos)
         {
-            if (arquivo.ArquivosID == 0)
-            {
-                context.arquivos.Add(arquivo);
-            }
-            else
-            {
-                context.Entry(arquivo).State = EntityState.Modified;
-            }
-            context.SaveChanges();
+            arquivosDAL.GravarArquivo(arquivos);
         }
 
-        public Arquivos EliminarArquivoPorId(long id)
+        public Arquivos EliminarArquivosPorId(long id)
         {
-            Arquivos arquivo = ObterArquivoId(id);
-            context.arquivos.Remove(arquivo);
-            context.SaveChanges();
-            return arquivo;
+            return arquivosDAL.EliminarArquivoPorId(id);
         }
     }
 }
