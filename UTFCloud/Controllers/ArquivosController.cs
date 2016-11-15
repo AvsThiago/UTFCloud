@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Modelo;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -28,7 +29,7 @@ namespace UTFCloud.Controllers
 
         // POST: Arquivos/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(Arquivos arquivo, HttpPostedFileBase logotipo = null)
         {
             try
             {
