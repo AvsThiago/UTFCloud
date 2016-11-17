@@ -1,0 +1,18 @@
+﻿@model IEnumerable<Modelo.Arquivos>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Meus arquivos";
+}
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4><b>Meus arquivos</b></h4>
+    </div>
+    <div class="panel-body">
+        <div class="panel-body">
+            @*@Html.HiddenFor(model => model.ArquivosID)*@
+            @Html.Partial("~/Views/Arquivos/__PartialDetailsContentPanel.cshtml")
+        </div>
+    </div>
+</div>

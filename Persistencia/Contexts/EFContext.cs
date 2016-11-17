@@ -12,10 +12,9 @@ namespace Persistencia.Contexts
 {
     public class EFContext : DbContext
     {
-        public EFContext() : base("UTFCloud")
+        public EFContext() : base("EFContext")
         {
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<EFContext, Configuration>());
-            
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

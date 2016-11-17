@@ -15,7 +15,8 @@ namespace Persistencia.DAL
 
         public IQueryable ObterArquivosPorRA(long ra)
         {
-            return context.arquivos.Where(p => p.RA == ra).OrderBy(n => n.NomeArquivo);
+            IQueryable<Arquivos> retorno = context.arquivos.Where(p => p.RA == ra).OrderBy(n => n.NomeArquivo);
+            return retorno;
         }
 
         public Arquivos ObterArquivoId(long id)
