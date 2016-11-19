@@ -1,0 +1,48 @@
+﻿@model IEnumerable<Modelo.Arquivos>
+
+<table class="table">
+    <tr>
+        <th class="text-center">
+            Privado
+        </th>
+        
+         <th class="text-center">
+            Registro Acadêmico
+        </th>
+       
+        <th class="text-center">
+            Nome Arquivo
+        </th>
+        <th class="text-center">
+            Data Remoção
+        </th>
+        <th class="text-center">
+            Download
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td class="text-center">
+            @if (!string.IsNullOrEmpty(item.Senha))
+            {
+                <span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
+            }
+        </td>
+        <td class="text-center">
+            @Html.DisplayFor(modelItem => item.RA)
+        </td>
+        <td class="text-center">
+            @Html.DisplayFor(modelItem => item.NomeArquivo)
+        </td>
+        <td class="text-center">
+            @Html.DisplayFor(modelItem => item.DtSerRemovido)
+        </td>
+        <td class="text-center">
+            @Html.ActionLink("Download", "DownloadArquivo", new { id = item.ArquivosID })
+        </td>
+
+</tr>
+}
+
+</table>

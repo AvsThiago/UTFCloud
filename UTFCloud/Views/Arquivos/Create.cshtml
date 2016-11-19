@@ -8,73 +8,72 @@
 @using (Html.BeginForm("Create", "Arquivos", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-        
-    <div class="form-horizontal">
-        <h3><b>Adicionar novo arquivo</b></h3>
-        <hr />
 
-        @if (ViewData.ModelState.Keys.Any(k => ViewData.ModelState[k].Errors.Count() > 0))
-        {
-            <div class="alert alert-danger alert-dismissable">
-                @Html.ValidationSummary(false, "Verifique os seguintes erros:")
-            </div>
-        }
+    <div class="panel panel-default ">
+        <div class="panel-heading">
+            <h4><b>Envie um novo arquivo</b></h4>
+        </div>
+        <div class="panel-body">
 
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.RA, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.RA, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.RA, "", new { @class = "text-danger" })
+            <div class="form-horizontal">
+                @if (ViewData.ModelState.Keys.Any(k => ViewData.ModelState[k].Errors.Count() > 0))
+                {
+                    <div class="alert alert-danger alert-dismissable">
+                        @Html.ValidationSummary(false, "Verifique os seguintes erros:")
+                    </div>
+                }
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.RA, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-9">
+                        @Html.EditorFor(model => model.RA, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.RA, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Senha, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-9">
+                        @Html.PasswordFor(model => model.Senha, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Senha, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.DtSerRemovido, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <select id="TempoParaRemover" name="TempoParaRemover" class="selectpicker show-tick">
+                            <option value="1">1 Hora</option>
+                            <option value="2">2 Horas</option>
+                            <option value="6">6 Horas</option>
+                            <option value="12">12 Horas</option>
+                            <option value="24">24 Horas</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-offset-2 col-md-10">
+                    <div class="form-group">
+                        <input type="file" name="Arquivo" id="Arquivo" onchange='$("#upload-fileinfo").html($(this).val());'>
+                        <span id="upload-file-info"></span>
+                    </div>
+                </div>
             </div>
         </div>
-    
-        <div class="form-group">
-            @Html.LabelFor(model => model.Senha, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.PasswordFor(model => model.Senha,  new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Senha, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.DtSerRemovido, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <select id="TempoParaRemover" name="TempoParaRemover" class="selectpicker show-tick">
-                    <option value="1">1 Hora</option>
-                    <option value="2">2 Horas</option>
-                    <option value="6">6 Horas</option>
-                    <option value="12">12 Horas</option>
-                    <option value="24">24 Horas</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="col-md-offset-7 col-md-5">
-            <div class="form-group">
-                <input type="file" name="Arquivo" id="Arquivo" onchange='$("#upload-fileinfo").html($(this).val());'>
-                <span id="upload-file-info"></span>
-            </div>
-            <div class="form-group">
-           
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <button type="submit" class="btn btn-primary btn-lg">
-                    <i class="glyphicon glyphicon-upload"></i> Enviar
-                </button>
-            </div>
+        <div class="panel-footer">
+            <button type="submit" class="btn btn-info btn-lg col-md-offset-10">
+                <i class="glyphicon glyphicon-upload"></i> Enviar
+            </button>
         </div>
     </div>
 }
 
 @section ScriptPage {
-    <script>
-        $(document).ready(function () {
-            //$(".busca").css("display", "block");
-        })
+        <script>
+            $(document).ready(function () {
+                //$(".busca").css("display", "block");
+            })
 
-    </script>
+        </script>
 }

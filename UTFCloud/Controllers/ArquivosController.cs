@@ -2,6 +2,7 @@
 using Servico;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -24,6 +25,16 @@ namespace UTFCloud.Controllers
         {
             return View(arquivoServico.ObterArquivosPorRA(ra));
         }
+
+        [Authorize]
+        public ActionResult Papelaria(string registro = null)
+        {
+            if (registro != null)
+                return View(arquivoServico.ObterArquivosPorRA(Convert.ToInt32(registro)));
+
+            return View();
+        }
+
 
         // GET: Arquivos/Create
         public ActionResult Create()
@@ -105,6 +116,16 @@ namespace UTFCloud.Controllers
             var bytesArquivo = new byte[arquivo.ContentLength];
             arquivo.InputStream.Read(bytesArquivo, 0, arquivo.ContentLength);
             return bytesArquivo;
+        }
+
+        public ActionResult DownloadArquivo(long id)
+        {
+            Arquivos arquivos = arquivoServico.ObterArquivoId(id);
+            FileStream fileStream = new FileStream(Server.MapPath("~/TempData/" + arquivos.NomeArquivo), FileMode.Create, FileAccess.Write);
+            fileStream.Write(arquivos.Arquivo, 0, Convert.ToInt32(arquivos.TamanhoArquivo));
+            fileStream.Close();
+
+            return File(fileStream.Name, arquivos.ArquivoMimeType, arquivos.NomeArquivo);
         }
 
         // GET: Arquivos/Edit/5

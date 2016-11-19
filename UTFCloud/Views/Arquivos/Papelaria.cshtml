@@ -1,0 +1,30 @@
+﻿@model IEnumerable<Modelo.Arquivos>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Meus arquivos";
+}
+@if (Model != null && Model.Count() > 0)
+{
+    <div class="panel panel-default">
+    <div class="panel-heading">
+        <h4><b>Arquivos</b></h4>
+    </div>
+
+        <div class="panel-body">
+            <div class="panel-body">
+                @*@Html.HiddenFor(model => model.ArquivosID)*@
+                @Html.Partial("~/Views/Arquivos/_PartialPapelariaContentPanel.cshtml")
+            </div>
+        </div>
+    </div>
+}
+
+@section ScriptPage {
+    <script>
+        $(document).ready(function () {
+            $(".busca").css("display", "block");
+        })
+
+    </script>
+}
