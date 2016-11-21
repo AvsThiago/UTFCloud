@@ -17,7 +17,10 @@ namespace UTFCloud.Controllers
         // GET: Arquivos
         public ActionResult Index()
         {
-            return View();
+            if (User.Identity.IsAuthenticated)
+                return View("Papelaria");
+            else
+                return View("Create");
         }
 
         // GET: Arquivos/Details/5
@@ -118,58 +121,26 @@ namespace UTFCloud.Controllers
             return bytesArquivo;
         }
 
-        public ActionResult DownloadArquivo(long id)
-        {
-            Arquivos arquivos = arquivoServico.ObterArquivoId(id);
-            FileStream fileStream = new FileStream(Server.MapPath("~/TempData/" + arquivos.NomeArquivo), FileMode.Create, FileAccess.Write);
-            fileStream.Write(arquivos.Arquivo, 0, Convert.ToInt32(arquivos.TamanhoArquivo));
-            fileStream.Close();
-
-            return File(fileStream.Name, arquivos.ArquivoMimeType, arquivos.NomeArquivo);
-        }
-
-        // GET: Arquivos/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Arquivos/Edit/5
+        [Authorize]
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult DownloadArquivo(long id, string senha = null)
         {
-            try
-            {
-                // TODO: Add update logic here
+            Arquivos arquivos = arquivoServico.ObterArquivoId(id, senha);
 
-                return RedirectToAction("Index");
-            }
-            catch
+            if (arquivos != null)
             {
-                return View();
+                FileStream fileStream = new FileStream(Server.MapPath("~/TempData/" + arquivos.NomeArquivo), FileMode.Create, FileAccess.Write);
+                fileStream.Write(arquivos.Arquivo, 0, Convert.ToInt32(arquivos.TamanhoArquivo));
+                fileStream.Close();
+
+                return File(fileStream.Name, arquivos.ArquivoMimeType, arquivos.NomeArquivo);
+            }
+            else
+            {
+                
+                return Redirect(HttpContext.Request.UrlReferrer.AbsoluteUri);
             }
         }
-
-        // GET: Arquivos/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Arquivos/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        
     }
 }

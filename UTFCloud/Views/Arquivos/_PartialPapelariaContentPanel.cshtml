@@ -39,10 +39,63 @@
             @Html.DisplayFor(modelItem => item.DtSerRemovido)
         </td>
         <td class="text-center">
-            @Html.ActionLink("Download", "DownloadArquivo", new { id = item.ArquivosID })
+            @if (string.IsNullOrEmpty(item.Senha))
+            {
+                using (Html.BeginForm("DownloadArquivo", "Arquivos"))
+                {
+                    <input type="text" class="form-control" id="id" name="id" value="@item.ArquivosID" style="display:none">
+                    <button type="submit" id="envia" class="btn btn-info"><span class="glyphicon glyphicon-download" aria-hidden="true"></span></button>
+                }
+            }
+            else
+            {
+                <button type="button" id="@Html.DisplayFor(modelItem => item.ArquivosID)" class="btn btn-info btn-md glyphicon glyphicon-download" data-toggle="modal" data-target="#modalSenha"></button>
+            }
         </td>
 
 </tr>
 }
 
 </table>
+
+<div id="modalSenha" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"><b>Senha</b></h4>
+            </div>
+            @using (Html.BeginForm("DownloadArquivo", "Arquivos"))
+            {
+                @Html.AntiForgeryToken()
+            <div class="modal-body">
+                
+                    <input type="text" class="form-control idsao" id="id" name="id" style="display:none">
+                    <input type="password" class="form-control" id="senha" name="senha" required placeholder="Senha">
+            </div>
+            <div class="modal-footer">
+                <button type="submit" id="envia" class="btn btn-info">Download</button>
+                <button id="confirm-delete-cancel" class="btn btn-default" data-dismiss="modal">Fechar</button>
+            </div>
+            }
+        </div>
+
+    </div>
+</div>
+
+<script src="@Url.Content( "~/scripts/jquery-3.1.1.js")"></script> 
+<script src="@Url.Content( "~/scripts/bootstrap.js")"></script>
+<script src="@Url.Content( "~/scripts/bootstrap-select.js")"></script>
+
+<script>
+    $('#modalSenha').on('show.bs.modal', function (e) {
+        var $modal = $(this),
+            esseyId = e.relatedTarget.id;
+        $(".idsao").val(esseyId);
+        $("#senha").val("");
+    });
+    
+    $('#envia').click(function () {
+        //$("#confirm-delete-cancel").trigger("click");
+    });
+</script>

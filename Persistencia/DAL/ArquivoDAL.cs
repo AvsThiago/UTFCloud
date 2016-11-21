@@ -19,9 +19,9 @@ namespace Persistencia.DAL
             return retorno;
         }
 
-        public Arquivos ObterArquivoId(long id)
+        public Arquivos ObterArquivoId(long id, string senha)
         {
-            return context.arquivos.Where(p => p.ArquivosID == id).FirstOrDefault();
+            return context.arquivos.Where(p => p.ArquivosID == id && p.Senha == senha).FirstOrDefault();
         }
 
         public void GravarArquivo(Arquivos arquivo)
@@ -39,10 +39,12 @@ namespace Persistencia.DAL
 
         public Arquivos EliminarArquivoPorId(long id)
         {
-            Arquivos arquivo = ObterArquivoId(id);
-            context.arquivos.Remove(arquivo);
-            context.SaveChanges();
-            return arquivo;
+            // TODO: implementar se necessário
+            //Arquivos arquivo = ObterArquivoId(id);
+            //context.arquivos.Remove(arquivo);
+            //context.SaveChanges();
+            //return arquivo;
+            return null;
         }
     }
 }

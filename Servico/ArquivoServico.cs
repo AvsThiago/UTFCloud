@@ -18,9 +18,9 @@ namespace Servico
             return arquivosDAL.ObterArquivosPorRA(ra);
         }
 
-        public Arquivos ObterArquivoId(long id)
+        public Arquivos ObterArquivoId(long id, string senha)
         {
-            return arquivosDAL.ObterArquivoId(id);
+            return arquivosDAL.ObterArquivoId(id, senha);
         }
 
         public void GravarArquivo(Arquivos arquivos)
