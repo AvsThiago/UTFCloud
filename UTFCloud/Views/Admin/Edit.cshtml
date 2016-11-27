@@ -1,61 +1,68 @@
-﻿@model UTFCloud.Models.UsuarioViewModel
+﻿@model UTFCloud.Models.SegurancaViewModels.MudaSenhaAdminModel
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.Title = "Alterando dados de um NOVO USUÁRIO";
+    ViewBag.Title = "Alteração dos dados do usuário.";
 }
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
-    <div class="panel panel-primary">
-        <div class="panel-heading">
-            Alterando o USUÁRIO @Html.DisplayFor(model => model.Id)
-        </div>
-        <div class="panel-body">
-            <div class="form-horizontal">
-                @if (ViewData.ModelState.Keys.Any(k => ViewData.ModelState[k].Errors.Count() > 0))
+    <div class="container col-md-offset-2 col-md-9 ">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4><b>Alterando a senha do Administrador: @Html.DisplayFor(model => model.Nome)</b></h4>
+            </div>
+            <div class="panel-body">
+                <div class="form-horizontal">
+                    @if (ViewData.ModelState.Keys.Any(k => ViewData.ModelState[k].Errors.Count() > 0))
                 {
-                    <div class="alert alert-danger alert-dismissable">
-                        @Html.ValidationSummary(false, "Verifique os seguintes erros:")
+                        <div class="alert alert-danger alert-dismissable">
+                            @Html.ValidationSummary(false, "Verifique os seguintes erros:")
+                        </div>
+                    }
+                    <div>
+                        @Html.HiddenFor(model => model.Id, new { @class = "form-control" })
                     </div>
-                }
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Nome, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.Nome, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Nome, "", new { @class = "text-danger" })
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Senha, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-9">
+                            @Html.PasswordFor(model => model.Senha, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Senha, "", new { @class = "text-danger" })
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                  
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.NovaSenha, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-9">
+                            @Html.PasswordFor(model => model.NovaSenha, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.NovaSenha, "", new { @class = "text-danger" })
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Senha, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.PasswordFor(model => model.Senha, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Senha, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.NovaSenhaNovamente, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-9">
+                            @Html.PasswordFor(model => model.NovaSenhaNovamente, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.NovaSenhaNovamente, "", new { @class = "text-danger" })
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="panel-footer panel-info">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Alterar Usuário" class="btn btn-danger" />
-                @Html.ActionLink("Retornar para a listagem de USUÁRIOS", "Index", null, new { @class = "btn btn-warning" })
+            <div class="panel-footer panel-info">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Alterar Senha" class="btn btn-info" />
+                </div>
+                <br />
+                <br />
             </div>
-            <br />
-            <br />
         </div>
-    </div>
-}
-@section ScriptPage {
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('li').removeClass("active");
-            $('#liUsuarios').addClass("active");
-        });
-    </script>
+        </div>
+        }
+        @section ScriptPage {
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $('li').removeClass("active");
+                    $('#liUsuarios').addClass("active");
+                });
+            </script>
+        }
