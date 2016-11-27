@@ -15,7 +15,11 @@
     margin:0;
 }
 
-.navbar-header, .navbar-left {
+.navbar-right p  {
+    margin:0;
+}
+
+.navbar-header, .navbar-left{
 padding: 8px 0;
 
 }
