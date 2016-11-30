@@ -35,7 +35,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.Senha, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-9">
-                        @Html.PasswordFor(model => model.Senha, new { @class = "form-control" })
+                        @Html.PasswordFor(model => model.Senha, new { @class = "form-control",@placeholder = "Caso queira, informe uma senha.   " })
                         @Html.ValidationMessageFor(model => model.Senha, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -55,7 +55,7 @@
 
                 <div class="col-md-offset-2 col-md-10">
                     <div class="form-group">
-                        <input type="file" name="Arquivo" id="Arquivo" onchange='$("#upload-fileinfo").html($(this).val());'>
+                        <input type="file" name="Arquivo" id="Arquivo" multiple="multiple" onchange='$("#upload-fileinfo").html($(this).val());'>
                         <span id="upload-file-info"></span>
                     </div>
                 </div>

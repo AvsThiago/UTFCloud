@@ -23,7 +23,7 @@ namespace Servico
             return arquivosDAL.ObterArquivoId(id, senha);
         }
 
-        public void GravarArquivo(Arquivos arquivos)
+        public void GravarArquivo(List<Arquivos> arquivos)
         {
             arquivosDAL.GravarArquivo(arquivos);
         }

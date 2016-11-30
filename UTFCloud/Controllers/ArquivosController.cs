@@ -46,7 +46,7 @@ namespace UTFCloud.Controllers
 
         // POST: Arquivos/Create
         [HttpPost]
-        public ActionResult Create([Bind(Exclude = "Arquivo")]Arquivos arquivos, HttpPostedFileBase arquivo = null, string TempoParaRemover = null)
+        public ActionResult Create([Bind(Exclude = "Arquivo")]Arquivos arquivos, IEnumerable<HttpPostedFileBase> arquivo/*HttpPostedFileBase arquivo = null*/, string TempoParaRemover = null)
         {
             try
             {
@@ -58,24 +58,31 @@ namespace UTFCloud.Controllers
             }
         }
 
-        private ActionResult GravarArquivo(Arquivos arquivos, HttpPostedFileBase logotipo, string TempoParaRemover)
+        [HttpPost]
+        private ActionResult GravarArquivo(Arquivos arquivos, IEnumerable<HttpPostedFileBase> logotipo, string TempoParaRemover)
         {
             try
             {
-                // TODO: Tamanho máximo arquivo enviado
-
                 if (logotipo != null)
                 {
                     if (ModelState.IsValid)
                     {
+                        List<Arquivos> lArquivos = new List<Arquivos>();
+                        foreach (var item in logotipo)
+                        {
+                            Arquivos arquivo = new Arquivos();
+                            arquivo.DtSerRemovido = arquivos.DtSerRemovido;
+                            arquivo.RA = arquivos.RA;
+                            arquivo.Senha = arquivos.Senha;
+                            arquivo.ArquivoMimeType = item.ContentType;
+                            arquivo.Arquivo = SetArquivo(item);
+                            arquivo.NomeArquivo = item.FileName;
+                            arquivo.TamanhoArquivo = item.ContentLength;
+                            arquivo = insereDataRemocao(arquivo, TempoParaRemover);
+                            lArquivos.Add(arquivo);
+                        }
+                        arquivoServico.GravarArquivo(lArquivos);
 
-                        arquivos.ArquivoMimeType = logotipo.ContentType;
-                        arquivos.Arquivo = SetArquivo(logotipo);
-                        arquivos.NomeArquivo = logotipo.FileName;
-                        arquivos.TamanhoArquivo = logotipo.ContentLength;
-                        arquivos = insereDataRemocao(arquivos, TempoParaRemover);
-                        arquivoServico.GravarArquivo(arquivos);
-                        // TODO: Colocar para enviar por post
                         return RedirectToAction("Details", new { ra = arquivos.RA });
                     }
                 }
@@ -84,7 +91,6 @@ namespace UTFCloud.Controllers
                     ModelState.AddModelError("55", "Escolha o arquivo a ser enviado.");
                 }
                
-                //PopularViewBag(arquivos);
                 return View(arquivos);
             }
             catch (Exception ex)

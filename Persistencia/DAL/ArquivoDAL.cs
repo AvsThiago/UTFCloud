@@ -24,16 +24,12 @@ namespace Persistencia.DAL
             return context.arquivos.Where(p => p.ArquivosID == id && p.Senha == senha).FirstOrDefault();
         }
 
-        public void GravarArquivo(Arquivos arquivo)
+        public void GravarArquivo(List<Arquivos> arquivo)
         {
-            if (arquivo.ArquivosID == 0)
-            {
-                context.arquivos.Add(arquivo);
-            }
-            else
-            {
-                context.Entry(arquivo).State = EntityState.Modified;
-            }
+            if (arquivo.Count > 0)
+                foreach (var item in arquivo)
+                    context.arquivos.Add(item);
+
             context.SaveChanges();
         }
 
